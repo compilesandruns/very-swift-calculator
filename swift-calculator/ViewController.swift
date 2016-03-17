@@ -16,36 +16,31 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var numberLabel: UILabel!
     
+    var previousNum = ""
+    var runningTotal = ""
+    var operation = ""
     
-    var accumulation: Double = 0.0
-    var currentResult: Double = 0.0
-    
+    var isADecimal = false
     var firstTimeThrough = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         operatorSymbols.forEach(){button in
-            
             button.backgroundColor = UIColor.orangeColor()
             formatButtonBorder(button)
         }
         
         numbers.forEach() { button in
-            
             button.backgroundColor = UIColor.lightGrayColor()
             formatButtonBorder(button)
             
         }
         
         additionalOperators.forEach(){ button in
-            
             button.backgroundColor = UIColor.grayColor()
             formatButtonBorder(button)
-            
         }
-        
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -53,32 +48,40 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    //FORMATTING
     
     func formatButtonBorder(button : UIButton) {
         button.layer.borderWidth = 0.5
         button.layer.borderColor = UIColor.darkGrayColor().CGColor
     }
     
+}
+
+
+//MARK UI
+
+extension ViewController {
     
-    //OPERATIONS
-    
-    @IBAction func showNum(sender: UIButton) {
+    @IBAction func numberPressed(sender: UIButton) {
         
-        guard let text = sender.titleLabel?.text else { return }
-        
-        switch text {
-        case ".":
-            numberLabel.text! += text
-            sender.enabled = false
+        if(firstTimeThrough) {
             
-        default:
+            if(numberLabel.text == "0") {
+                
+                numberLabel.text = (sender.titleLabel?.text)!
+                
+            }
+            else {
+                numberLabel.text! += (sender.titleLabel?.text)!
+            }
             
-            let isCurrentResultZero = currentResult == 0.0
-            numberLabel.text = isCurrentResultZero ? text : numberLabel.text! + text
-            currentResult = Double(numberLabel.text!)!
+            previousNum = numberLabel.text!
+            
+            print("previous number: \(previousNum)")
         }
-        
+        else {
+            
+            
+        }
         
         
     }
@@ -86,63 +89,33 @@ class ViewController: UIViewController {
     
     @IBAction func operatorPressed(sender: UIButton) {
         
-        doMathWith(currentResult, operation: sender.titleLabel!.text!)
-    }
-    
-    
-    @IBAction func clearButton(sender: AnyObject) {
+        guard let operationPressed = sender.titleLabel?.text else { return }
         
-        currentResult = 0
-        numberLabel.text = "0"
-        firstTimeThrough = true
-        
-    }
-    
-    
-}
-
-//MARK : Operator Methods
-extension ViewController {
-    
-    func doMathWith(number: Double, operation: String) {
-        
-        if !firstTimeThrough {
-            
-            switch operation {
+        if(!firstTimeThrough)
+        {
+            switch operationPressed
+            {
+            case "+" :
+                operation = "+"
+            case "-" :
+                operation = "+"
             case "÷" :
-                accumulation /= number
-            case  "×":
-                accumulation *= number
-            case "-":
-                accumulation -= number
-            case "+":
-                accumulation += number
-            case "=":
-            
-                numberLabel.text! = String(accumulation)
-                
-            default:
-                fatalError("Operator press that isn't recognized.")
+                operation = "+"
+            case "×" :
+                operation = "+"
+            default :
+                fatalError()
+
             }
             
-            currentResult = 0.0
-            numberLabel.text! = String(accumulation)
-            
-            
+                print("\(operation)")
         }
-        
-        accumulation = currentResult
-        currentResult = 0.0
-        firstTimeThrough = false
-        
-        
-        
+            
     }
     
     
     
+    
 }
-
-
 
 
