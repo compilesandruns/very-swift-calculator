@@ -22,6 +22,7 @@ class ViewController: UIViewController {
     
     var isADecimal = false
     var firstTimeThrough = true
+    var doneTypingNum = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,27 +64,30 @@ extension ViewController {
     
     @IBAction func numberPressed(sender: UIButton) {
         
+        print("number pressed")
+        
+        if(doneTypingNum) {
             
-        if(numberLabel.text == "0") {
-            
-            numberLabel.text = (sender.titleLabel?.text)!
-            
+            numberLabel.text = (sender.titleLabel?.text)
         }
+        
         else {
+            
             numberLabel.text! += (sender.titleLabel?.text)!
-        }
-        
-        if(firstTimeThrough) {
             
-            firstTimeThrough = false
-        }
-        else {
-        
-            doMath()
-            previousNum = ""
+            doneTypingNum = false
+
         }
         
         previousNum = numberLabel.text!
+
+        if (!firstTimeThrough) {
+           
+            print("math done, running total: \(runningTotal)")
+
+            doMath()
+        }
+
         
         print("previous number: \(previousNum)")
 
@@ -95,8 +99,9 @@ extension ViewController {
         
         guard let operationPressed = sender.titleLabel?.text else { return }
         
-        if(!firstTimeThrough)
-        {
+        doneTypingNum = true
+        firstTimeThrough = false
+
             switch operationPressed
             {
             case "+" :
@@ -113,7 +118,7 @@ extension ViewController {
             }
             
                 print("\(operation)")
-        }
+        
             
     }
     
@@ -124,10 +129,9 @@ extension ViewController {
         {
         case "+" :
             
+            print(" running total: \(runningTotal) = prev: \(previousNum) + running \(runningTotal)")
+            
             runningTotal = String( Int(previousNum)! + Int(runningTotal)!)
-            
-            print("running total: \(runningTotal)")
-            
             
         case "-" :
             operation = "+"
