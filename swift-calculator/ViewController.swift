@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var numberLabel: UILabel!
     
     var previousNum = ""
-    var runningTotal = ""
+    var runningTotal = "0"
     var operation = ""
     
     var isADecimal = false
@@ -63,26 +63,30 @@ extension ViewController {
     
     @IBAction func numberPressed(sender: UIButton) {
         
-        if(firstTimeThrough) {
             
-            if(numberLabel.text == "0") {
-                
-                numberLabel.text = (sender.titleLabel?.text)!
-                
-            }
-            else {
-                numberLabel.text! += (sender.titleLabel?.text)!
-            }
+        if(numberLabel.text == "0") {
             
-            previousNum = numberLabel.text!
+            numberLabel.text = (sender.titleLabel?.text)!
             
-            print("previous number: \(previousNum)")
         }
         else {
-            
-            
+            numberLabel.text! += (sender.titleLabel?.text)!
         }
         
+        if(firstTimeThrough) {
+            
+            firstTimeThrough = false
+        }
+        else {
+        
+            doMath()
+            previousNum = ""
+        }
+        
+        previousNum = numberLabel.text!
+        
+        print("previous number: \(previousNum)")
+
         
     }
     
@@ -114,8 +118,35 @@ extension ViewController {
     }
     
     
+    func doMath() {
+        
+        switch operation
+        {
+        case "+" :
+            
+            runningTotal = String( Int(previousNum)! + Int(runningTotal)!)
+            
+            print("running total: \(runningTotal)")
+            
+            
+        case "-" :
+            operation = "+"
+        case "÷" :
+            operation = "+"
+        case "×" :
+            operation = "+"
+        default :
+            fatalError()
+            
+        }
+        
+        
+    }
+
     
     
+    
+
 }
 
 
