@@ -52,6 +52,9 @@
                                                         <state key="normal" title="AC">
                                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="resetAll:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bv8-em-UGT"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g2g-p6-aCC" userLabel="+/-">
                                                         <rect key="frame" x="150" y="0.0" width="150" height="96"/>
@@ -240,6 +243,9 @@
                                                         <state key="normal" title="=">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="equalPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1d4-xE-xtT"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <constraints>

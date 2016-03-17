@@ -16,7 +16,8 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var numberLabel: UILabel!
     
-    var previousNum = ""
+    var previousNum = "0"
+    var currentNum = ""
     var runningTotal = "0"
     var operation = ""
     
@@ -64,13 +65,10 @@ extension ViewController {
     
     @IBAction func numberPressed(sender: UIButton) {
         
-        print("number pressed")
-        
-        if(doneTypingNum) {
-            
+        if(doneTypingNum)
+        {
             numberLabel.text = (sender.titleLabel?.text)
         }
-        
         else {
             
             numberLabel.text! += (sender.titleLabel?.text)!
@@ -82,15 +80,10 @@ extension ViewController {
         previousNum = numberLabel.text!
 
         if (!firstTimeThrough) {
-            doMath()
+            doMath((sender.titleLabel?.text)!)
             print("math done, running total: \(runningTotal)")
 
         }
-
-        
-        print("previous number: \(previousNum)")
-
-        
     }
     
     
@@ -106,47 +99,80 @@ extension ViewController {
             case "+" :
                 operation = "+"
             case "-" :
-                operation = "+"
+                operation = "-"
             case "÷" :
-                operation = "+"
+                operation = "÷"
             case "×" :
-                operation = "+"
+                operation = "×"
             default :
                 fatalError()
 
             }
-            
                 print("\(operation)")
-        
-            
     }
     
     
-    func doMath() {
+    func doMath(currentNumber: String) {
         
         switch operation
         {
         case "+" :
-            
-            runningTotal = String( Int(previousNum)! + Int(runningTotal)!)
-            
+            print("prev: \(previousNum) \(operation) curr: \(currentNumber) ")
+            runningTotal = String( Int(previousNum)! + Int(currentNumber)!)
+            print("running total: \(runningTotal)")
         case "-" :
-            runningTotal = String( Int(previousNum)! - Int(runningTotal)!)
+            print("prev: \(previousNum) \(operation) curr: \(currentNumber) ")
+
+            runningTotal = String( Int(previousNum)! - Int(currentNumber)!)
+            
+            print("running total: \(runningTotal)")
+
         case "÷" :
-            runningTotal = String( Int(previousNum)! / Int(runningTotal)!)
+            print("prev: \(previousNum) \(operation) curr: \(currentNumber) ")
+
+            runningTotal = String( Int(previousNum)! / Int(currentNumber)!)
+            print("running total: \(runningTotal)")
+
         case "×" :
-            runningTotal = String( Int(previousNum)! * Int(runningTotal)!)
+            print("prev: \(previousNum) \(operation) curr: \(currentNumber) ")
+
+            runningTotal = String( Int(previousNum)! * Int(currentNumber)!)
+            print("running total: \(runningTotal)")
+
         default :
             fatalError()
             
         }
         
-        print(" running total: \(runningTotal) = prev: \(previousNum) \(operation) running \(runningTotal) ")
+
 
     }
 
+    @IBAction func resetAll(sender: UIButton) {
+        
+        self.numberLabel.text = "0"
+        
+        previousNum = "0"
+        currentNum = ""
+        runningTotal = "0"
+        operation = ""
+        
+        isADecimal = false
+        firstTimeThrough = true
+        doneTypingNum = false
+
+        
+    }
+    
+    @IBAction func equalPressed(sender: UIButton) {
+        
+        numberLabel.text = runningTotal
+    }
     
     
+    
+    //additiona work: need to support decimals
+    //need to figure out how to deal with operators being hit after =
     
 
 }
