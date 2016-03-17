@@ -82,10 +82,9 @@ extension ViewController {
         previousNum = numberLabel.text!
 
         if (!firstTimeThrough) {
-           
+            doMath()
             print("math done, running total: \(runningTotal)")
 
-            doMath()
         }
 
         
@@ -129,22 +128,21 @@ extension ViewController {
         {
         case "+" :
             
-            print(" running total: \(runningTotal) = prev: \(previousNum) + running \(runningTotal)")
-            
             runningTotal = String( Int(previousNum)! + Int(runningTotal)!)
             
         case "-" :
-            operation = "+"
+            runningTotal = String( Int(previousNum)! - Int(runningTotal)!)
         case "÷" :
-            operation = "+"
+            runningTotal = String( Int(previousNum)! / Int(runningTotal)!)
         case "×" :
-            operation = "+"
+            runningTotal = String( Int(previousNum)! * Int(runningTotal)!)
         default :
             fatalError()
             
         }
         
-        
+        print(" running total: \(runningTotal) = prev: \(previousNum) \(operation) running \(runningTotal) ")
+
     }
 
     
